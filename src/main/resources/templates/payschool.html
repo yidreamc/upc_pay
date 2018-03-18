@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="/css/lib/weui.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/my.css">
+    <script src="/js/lib/zepto.min.js"></script>
+    <script src="/js/lib/jquery-2.1.4.min.js"></script>
+    <script src="/js/payment.js"></script>
+    <title th:text="${name}">缴费</title>
+</head>
+<body>
+
+<div class="page">
+    <div class="page__hd">
+        <div class="header" th:text="${name}">
+
+        </div>
+
+    </div>
+
+    <div style="display: none">
+        <input type="text" th:value="${id}" id="id">
+    </div>
+
+    <div class="page__bd" >
+        <div class="weui-cells__title" th:if="${isIndefine}">选择</div>
+        <div class="weui-cells" th:if="${isIndefine}">
+            <div class="weui-cell weui-cell_select weui-cell_select-after">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">缴费类型</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <label>
+                        <select class="weui-select" id="payment_type" onchange="changeType(this)">
+                            <option value="" disabled selected hidden>请选择类型</option>
+                            <option th:each="type : ${types}" th:text="${type.type}" th:value="${type.type}"  th:attr="data-money=${type.money}">健身卡缴费</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="weui-cells__title">缴费金额</div>
+        <div class="weui-cells weui-cells_form">
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label" for="host">金额</label>
+                </div>
+                <div class="weui-cell__bd" id="host">
+                    <input class="weui-input" type="text" id="amt" placeholder="请输入缴费金额">
+                </div>
+            </div>
+        </div>
+
+        <div style="display: none">
+
+            <div class="weui-cells__title" th:text="${p1name}">参数1</div>
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
+                    <div class="weui-cell__hd">
+                        <label class="weui-label" for="host" th:text="${p1name}">值</label>
+                    </div>
+                    <div class="weui-cell__bd" id="p1name">
+                        <input class="weui-input" type="text" id="p1" placeholder="" th:value="${uname}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="weui-cells__title" th:text="${p2name}">参数2</div>
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
+                    <div class="weui-cell__hd">
+                        <label class="weui-label" for="host" th:text="${p2name}" >值</label>
+                    </div>
+                    <div class="weui-cell__bd" id="p2name">
+                        <input class="weui-input" type="text" id="p2" placeholder="" th:value="${uid}">
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+
+        <div class="weui-btn-area">
+            <a class="weui-btn weui-btn_primary self_btn" href="javascript:" id="sub">确定</a>
+        </div>
+        <form id="nic_form" action="http://jf.finance.upc.edu.cn/payment/pay/mobileAppPay.action" method="post">
+            <input id="sign" type="hidden" name="sign">
+            <input id="sysid" type="hidden" name="sysid">
+            <input id="subsysid" type="hidden" name="subsysid">
+            <input id="data" type="hidden" name="data">
+        </form>
+
+        <div id="dialogs">
+            <div class="dialog-confirm" id="dialog_1" style="display: none;">
+                <div class="weui-mask"></div>
+                <div class="weui-dialog">
+                    <div class="weui-dialog__bd">请输入正确的金额</div>
+                    <div class="weui-dialog__ft">
+                        <a href="javascript:" id=""
+                           class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dialog-confirm" id="dialog_2" style="display: none;">
+                <div class="weui-mask"></div>
+                <div class="weui-dialog">
+                    <!--<div class="weui-dialog__hd"><strong class="weui-dialog__title">弹窗标题</strong></div>-->
+                    <div class="weui-dialog__bd">
+                        <div id="packageErr">仅限校园网用户充值</div>
+                        <br>
+                        <div id="packageErrCon"></div>
+                    </div>
+                    <div class="weui-dialog__ft">
+                        <a href="javascript:" id="confirm_campus_group"
+                           class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="dialog-confirm" id="dialog_e" style="display: none;">
+                <div class="weui-mask"></div>
+                <div class="weui-dialog">
+                    <div class="weui-dialog__bd" id="dialog_err">请输入正确的金额</div>
+                    <div class="weui-dialog__ft">
+                        <a href="javascript:" id="confirm_empty"
+                           class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="page_ft">
+    </div>
+</div>
+</body>
+</html>

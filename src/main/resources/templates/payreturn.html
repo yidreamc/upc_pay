@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+	<title>缴费成功</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+
+	<!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+
+<h3 style="text-align: center;">支付成功</h3>
+
+<table class="table table-striped">
+	<tr>
+		<td>订单号</td>
+		<td th:text="${billno}"></td>
+	</tr>
+
+	<tr>
+		<td>平台单号</td>
+		<td th:text="${trade_no}"></td>
+	</tr>
+
+	<tr>
+		<td>卡号</td>
+		<td th:text="${cardNum}"></td>
+	</tr>
+
+	<tr>
+		<td>姓名</td>
+		<td th:text="${name}"></td>
+	</tr>
+
+	<tr>
+		<td>缴费金额</td>
+		<td th:text="${billamt}"></td>
+	</tr>
+
+	<tr>
+		<td>支付时间</td>
+		<td th:text="${paidtime}"></td>
+	</tr>
+</table>
+
+
+
+<input type="button" style="background-color: #62b900" class="btn btn-block" value="关闭窗口" onclick="WeixinJSBridge.call('closeWindow');" />
+
+
+</body>
+</html>

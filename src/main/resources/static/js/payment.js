@@ -16,8 +16,8 @@ $(function () {
                 $("#dialog_1").fadeIn(200);
             } else {
                 $.ajax({
-                    url: 'http://localhost:8088/getPaymentData',
-                   // url: 'http://wxsportscard.upc.edu.cn:8088/getPaymentData',
+                   // url: 'http://localhost:8088/getPaymentData',
+                   url: 'http://wxsportscard.upc.edu.cn:8088/getPaymentData',
                     type: 'GET',
                     data: {
                         amt: $('#amt').val(),

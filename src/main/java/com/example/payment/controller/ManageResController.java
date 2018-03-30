@@ -106,6 +106,7 @@ public class ManageResController {
         String name = param.get("name").toString();
         Integer type = Integer.valueOf(param.get("type").toString());
         Integer isIndefine = Integer.valueOf(param.get("isIndefine").toString());
+        Integer bill = Integer.valueOf(param.get("isBill").toString());
         String p1name = null, p2name = null;
         Integer p1code = 0, p2code = 0;
 
@@ -126,9 +127,12 @@ public class ManageResController {
 
         boolean in = (isIndefine == 1) ? true : false;
 
+        boolean bi = (bill == 1) ? true : false;
+
         Payment payment = new Payment(sysid, subsysid, cert, feeitemid, name, "", p1name, p1code, p2name, p2code, in);
         payment.setType(type);
         payment.setAid(aid);
+        payment.setBill(bi);
 
 
         payment = paymentRepository.save(payment);
@@ -168,6 +172,7 @@ public class ManageResController {
         String name = param.get("name").toString();
         Integer type = Integer.valueOf(param.get("type").toString());
         Integer isIndefine = Integer.valueOf(param.get("isIndefine").toString());
+        Integer bill = Integer.valueOf(param.get("isBill").toString());
         String p1name = null, p2name = null;
         Integer p1code = 0, p2code = 0;
         // type = 1 校内用户
@@ -184,6 +189,7 @@ public class ManageResController {
         String cert = param.get("cert").toString();
         Option2[] options = new Gson().fromJson(param.get("stringify").toString(), Option2[].class);
         boolean in = (isIndefine == 1) ? true : false;
+        boolean bi = (bill == 1) ? true : false;
 
         int id = Integer.valueOf(param.get("id").toString());
         Payment payment = paymentRepository.findOne(id);
@@ -198,6 +204,7 @@ public class ManageResController {
         payment.setP2name(p2name);
         payment.setIndefine(in);
         payment.setType(type);
+        payment.setBill(bi);
 
         paymentRepository.save(payment);
 

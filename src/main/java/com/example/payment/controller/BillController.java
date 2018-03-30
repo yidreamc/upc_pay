@@ -1,5 +1,6 @@
 package com.example.payment.controller;
 
+import com.example.payment.model.Bill;
 import com.example.payment.model.BillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,9 +22,15 @@ public class BillController {
     }
 
     @PostMapping("/deleteBill")
-    public Object delete(@RequestBody Map<String,Integer> param){
-        int id = param.get("id");
-        billRepository.delete(id);
-        return 1;
+    public Object delete(@RequestBody Map<String,String> param){
+        String id = param.get("id");
+        Bill bill = billRepository.findByTaxCode(id);
+        if(bill != null){
+            billRepository.delete(bill);
+            System.out.println(param);
+            return 1;
+        }
+        return 0;
+
     }
 }

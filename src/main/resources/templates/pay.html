@@ -131,6 +131,51 @@
             </div>
         </div>
 
+        <div th:if="${isBill}">
+            <div class="weui-cells__title">选择</div>
+            <div class="weui-cells">
+                <div class="weui-cell weui-cell_select weui-cell_select-after">
+                    <div class="weui-cell__hd">
+                        <label class="weui-label">选择单位</label>
+                    </div>
+
+                    <div class="weui-cell__bd">
+                        <label>
+                            <select class="weui-select" onchange="changeBill(this)">
+                                <option value="" disabled selected hidden>选择单位</option>
+                                <option th:each="bill : ${bills}" th:text="${bill.zzUnit}" th:value="${bill.zzUnit}"
+                                        th:attr="data-taxCode=${bill.taxCode}">
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="weui-cells__title">税号</div>
+
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
+                    <div class="weui-cell__hd">
+                        <label class="weui-label" for="host">税号</label>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="text" id="taxCode" placeholder="" disabled>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+        </div>
+
+
+
+
+
 
         <div th:if="${ismark}">
 

@@ -16,7 +16,8 @@ $(function () {
                 $("#dialog_1").fadeIn(200);
             } else {
                 $.ajax({
-                    url: 'http://wxsportscard.upc.edu.cn:8088/getPaymentData',
+                    url: 'http://localhost:8088/getPaymentData',
+                   // url: 'http://wxsportscard.upc.edu.cn:8088/getPaymentData',
                     type: 'GET',
                     data: {
                         amt: $('#amt').val(),
@@ -24,17 +25,18 @@ $(function () {
                         uname: $('#p1').val(),
                         pid: $('#id').val(),
                         mark: $('#mark').val(),
+                        taxCode: $('#taxCode').val(),
                     },
                     success: function (result) {
                         result = JSON.parse(result);
                         if (result.result !== 'success') {
                             return;
                         }
-                        if(result.data.code == 0){
+                        if (result.data.code == 0) {
                             $("#dialog_err").html(result.data.info);
                             $("#dialog_e").fadeIn(200);
 
-                        }else {
+                        } else {
                             var nic_form = $('#nic_form');
                             $('#sign').val(result.data.sign);
                             $('#sysid').val(result.data.sysid);
@@ -51,12 +53,18 @@ $(function () {
     );
 });
 
-    function changeType(opt) {
-        var index = opt.selectedIndex;
-        $('#amt').val(opt[index].dataset.money);
-        $('#amt').attr("disabled",true);
+function changeType(opt) {
+    var index = opt.selectedIndex;
+    $('#amt').val(opt[index].dataset.money);
+    $('#amt').attr("disabled", true);
 
-        //备注
-        $('#mark').val(opt[index].dataset.type);
+    //备注
+    $('#mark').val(opt[index].dataset.type);
 
-    }
+}
+
+
+function changeBill(opt) {
+    var index = opt.selectedIndex;
+    $('#taxCode').val(opt[index].dataset.taxcode);
+}

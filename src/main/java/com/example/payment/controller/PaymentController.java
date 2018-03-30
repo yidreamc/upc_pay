@@ -1,10 +1,7 @@
 package com.example.payment.controller;
 
 import com.example.payment.dto.ResultData;
-import com.example.payment.model.Order;
-import com.example.payment.model.OrderRepository;
-import com.example.payment.model.Payment;
-import com.example.payment.model.PaymentRepository;
+import com.example.payment.model.*;
 import com.example.payment.pojo.Check;
 import com.example.payment.pojo.IdCheck;
 import com.example.payment.util.MD5;
@@ -37,7 +34,10 @@ public class PaymentController {
 
     private int orderBase = 100000;
 
-    private ModelXmlBeanFactory modelXmlBeanFactory ;
+    private ModelXmlBeanFactory modelXmlBeanFactory;
+
+    @Autowired
+    private BillRepository billRepository;
 
 
     private Check check;
@@ -45,13 +45,11 @@ public class PaymentController {
     private String serverPath = "http://wxsportscard.upc.edu.cn:8088";
 
 
-
-
     @GetMapping("/getPaymentData")
-    public Object getPaymentData(String uid,String uname,String amt,int pid,String mark) throws UnsupportedEncodingException {
+    public Object getPaymentData(String taxCode, String uid, String uname, String amt, int pid, String mark) throws UnsupportedEncodingException {
 
         Payment payment = paymentRepository.findOne(pid);
-        if(payment == null){
+        if (payment == null) {
             return "false";
         }
         System.out.println("uid:" + uid);
@@ -59,7 +57,7 @@ public class PaymentController {
         int type = payment.getType();
 
         //no shcool
-        if(type != 1){
+        if (type != 1) {
 
             int p1code = payment.getP1code();
             int p2code = payment.getP2code();
@@ -70,48 +68,48 @@ public class PaymentController {
             System.out.println("".equals(p1));
             System.out.println("".equals(p2));
             System.out.println(uid == null);
-            if("".equals(p1)){
+            if ("".equals(p1)) {
                 uname = "default";
             }
 
-            if("".equals(p2)){
-               uid = "default";
+            if ("".equals(p2)) {
+                uid = "default";
             }
 
-            if(uname == "" || uid == ""){
+            if (uname == "" || uid == "") {
                 Map<String, String> err = new HashMap<>();
-                err.put("code","0");
-                err.put("info","参数不能为空");
+                err.put("code", "0");
+                err.put("info", "参数不能为空");
                 return ResultData.ok(err);
             }
-            if(p1code != 0){
+            if (p1code != 0) {
 
                 //身份证
-                if(p1code == 1){
+                if (p1code == 1) {
                     check = new IdCheck();
-                    if(check.doCheck(uname) == false){
+                    if (check.doCheck(uname) == false) {
                         Map<String, String> err = new HashMap<>();
-                        err.put("code","0");
-                        err.put("info",check.err());
+                        err.put("code", "0");
+                        err.put("info", check.err());
                         return ResultData.ok(err);
                     }
                 }
 
                 //手机号
-                if(p1code == 2){
-                    if(MobileUtils.isMobileNO(uname) == false){
+                if (p1code == 2) {
+                    if (MobileUtils.isMobileNO(uname) == false) {
                         Map<String, String> err = new HashMap<>();
-                        err.put("code","0");
-                        err.put("info","请输入正确的手机号");
+                        err.put("code", "0");
+                        err.put("info", "请输入正确的手机号");
                         return ResultData.ok(err);
                     }
                 }
 
-                if(p1code == 3){
-                    if(getLen(uname)>50){
+                if (p1code == 3) {
+                    if (getLen(uname) > 50) {
                         Map<String, String> err = new HashMap<>();
-                        err.put("code","0");
-                        err.put("info","参数的长度必须小于50个字");
+                        err.put("code", "0");
+                        err.put("info", "参数的长度必须小于50个字");
                         return ResultData.ok(err);
                     }
                 }
@@ -119,24 +117,24 @@ public class PaymentController {
             }
 
 
-            if(p2code != 0){
+            if (p2code != 0) {
 
-                if(p2code == 1){
+                if (p2code == 1) {
                     check = new IdCheck();
-                    if(check.doCheck(uid) == false){
+                    if (check.doCheck(uid) == false) {
                         Map<String, String> err = new HashMap<>();
-                        err.put("code","0");
-                        err.put("info",check.err());
+                        err.put("code", "0");
+                        err.put("info", check.err());
                         return ResultData.ok(err);
                     }
                 }
 
                 //手机号
-                if(p2code == 2){
-                    if(MobileUtils.isMobileNO(uid) == false){
+                if (p2code == 2) {
+                    if (MobileUtils.isMobileNO(uid) == false) {
                         Map<String, String> err = new HashMap<>();
-                        err.put("code","0");
-                        err.put("info","请输入正确的手机号");
+                        err.put("code", "0");
+                        err.put("info", "请输入正确的手机号");
                         return ResultData.ok(err);
                     }
                 }
@@ -145,14 +143,15 @@ public class PaymentController {
 
         }
 
+
+
         String sysid = payment.getSysid();
         String subsysid = payment.getSubsysid();
         String cert = payment.getCert();
         String feeitemid = payment.getFeeitemid();
 
 
-
-        Order order = new Order(uid,uname);
+        Order order = new Order(uid, uname);
 
         System.out.println("uid: " + uid + "  uname: " + uname);
         order = orderRepository.save(order);
@@ -172,10 +171,21 @@ public class PaymentController {
         billInfo.setBilldtl(billDtls);
 
 
+        if(!"".equals(taxCode)){
+            Bill bill = billRepository.findByTaxCode(taxCode);
+            if(bill != null){
+                billInfo.setTaxCode(bill.getTaxCode());
+                billInfo.setZzAddress(bill.getZzAddress());
+                billInfo.setZzBank(bill.getZzBank());
+                billInfo.setZzBnkName(bill.getZzBnkName());
+                billInfo.setZzTel(bill.getZzTel());
+                billInfo.setZzUnit(bill.getZzUnit());
+            }
+        }
+
+
         String data = XMLUtils.javaBean2xml(billInfo);
         String sign = MD5.getMD5(sysid + subsysid + cert + data).toLowerCase();
-
-
         data = URLEncoder.encode(data, "UTF-8");
 
         Map<String, String> retMap = new HashMap<>();
@@ -184,7 +194,7 @@ public class PaymentController {
         retMap.put("subsysid", subsysid);
         retMap.put("data", data);
         retMap.put("sign", sign);
-        retMap.put("code","1");
+        retMap.put("code", "1");
 
         System.out.println("mark" + mark.length());
 
@@ -194,9 +204,9 @@ public class PaymentController {
     }
 
 
-
     /**
      * 获取字符串的长度，如果有中文，则每个中文字符计为2位
+     *
      * @param value 指定的字符串
      * @return 字符串的长度
      */

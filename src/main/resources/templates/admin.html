@@ -90,6 +90,7 @@
                     </el-select>
                 </el-form-item>
 
+
                 <div v-if="isIndefine">
 
                     <el-form-item label="添加选项"
@@ -125,6 +126,15 @@
 
 
                 </div>
+
+
+                <el-form-item label="采集票据信息">
+                    <el-select v-model="form.isBill" placeholder="选择是否定项" @change="changeIsBill">
+                        <el-option label="是" value="1"></el-option>
+                        <el-option label="否" value="2"></el-option>
+                    </el-select>
+                </el-form-item>
+
 
 
                 <el-form-item label="subsysid" prop="subsysid">
@@ -224,27 +234,27 @@
                 <el-table :data="bills" highlight-current-row style="">
 
 
-                    <el-table-column prop="zzUnit" label="单位名" width="100" sortable>
+                    <el-table-column prop="zzUnit" label="单位名" width="200" sortable>
                     </el-table-column>
 
-                    <el-table-column prop="taxCode" label="税号" width="100" sortable>
+                    <el-table-column prop="taxCode" label="税号" width="200" sortable>
                     </el-table-column>
 
-                    <el-table-column prop="zzAddress" label="地址" width="100" sortable>
+                    <el-table-column prop="zzAddress" label="地址" width="200" sortable>
                     </el-table-column>
 
-                    <el-table-column prop="zzBnkName" label="银行名称" width="100" sortable>
+                    <el-table-column prop="zzBnkName" label="银行名称" width="200" sortable>
                     </el-table-column>
 
-                    <el-table-column prop="zzBank" label="银行卡号" width="100" sortable>
+                    <el-table-column prop="zzBank" label="银行卡号" width="200" sortable>
                     </el-table-column>
 
 
-                    <!--<el-table-column label="操作" width="300">-->
-                        <!--<template scope="scope">-->
-                            <!--<el-button type="danger" size="small" @click="deletPayment(scope.$index, scope.row)">删除</el-button>-->
-                        <!--</template>-->
-                    <!--</el-table-column>-->
+                    <el-table-column label="操作" width="300">
+                        <template scope="scope">
+                            <el-button type="danger" size="small" @click="deletBill(scope.$index, scope.row)">删除</el-button>
+                        </template>
+                    </el-table-column>
                 </el-table>
 
 
@@ -395,6 +405,13 @@
 
 
             </div>
+
+            <el-form-item label="采集票据信息">
+                <el-select v-model="editform1.isBill" placeholder="选择是否定项" @change="changeIsBill">
+                    <el-option label="是" value="1"></el-option>
+                    <el-option label="否" value="2"></el-option>
+                </el-select>
+            </el-form-item>
 
 
             <el-form-item label="subsysid" prop="subsysid">

@@ -3,7 +3,7 @@ package com.example.payment.xml;
 
 public class ModelXmlBeanFactory {
 
-    private String xml_version = "1.0.0.2";
+    private String xml_version = "1.0.0.4";
 
     private String nic_netfee_feeitemid;
 

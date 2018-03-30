@@ -18,7 +18,13 @@ import java.util.List;
         "orderinfoname",
         "returnURL",
         "billremark",
-        "billdtl"
+        "billdtl",
+        "taxCode",
+        "zzAddress",
+        "zzBank",
+        "zzBnkName",
+        "zzTel",
+        "zzUnit"
 })
 @XmlRootElement(name = "billinfo")
 public class BillInfo {
@@ -29,6 +35,61 @@ public class BillInfo {
     private String returnURL;
     private String billremark;
     private List<BillDtl> billdtl;
+
+    private String taxCode;
+    private String zzAddress;
+    private String zzBank;
+    private String zzBnkName;
+    private String zzTel;
+    private String zzUnit;
+
+    public String getTaxCode() {
+        return taxCode;
+    }
+
+    public void setTaxCode(String taxCode) {
+        this.taxCode = taxCode;
+    }
+
+    public String getZzAddress() {
+        return zzAddress;
+    }
+
+    public void setZzAddress(String zzAddress) {
+        this.zzAddress = zzAddress;
+    }
+
+    public String getZzBank() {
+        return zzBank;
+    }
+
+    public void setZzBank(String zzBank) {
+        this.zzBank = zzBank;
+    }
+
+    public String getZzBnkName() {
+        return zzBnkName;
+    }
+
+    public void setZzBnkName(String zzBnkName) {
+        this.zzBnkName = zzBnkName;
+    }
+
+    public String getZzTel() {
+        return zzTel;
+    }
+
+    public void setZzTel(String zzTel) {
+        this.zzTel = zzTel;
+    }
+
+    public String getZzUnit() {
+        return zzUnit;
+    }
+
+    public void setZzUnit(String zzUnit) {
+        this.zzUnit = zzUnit;
+    }
 
     public BillInfo() {
 

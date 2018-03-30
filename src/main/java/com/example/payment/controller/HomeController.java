@@ -32,6 +32,9 @@ public class HomeController {
     @Autowired
     private ItemRepository itemRepository;
 
+    @Autowired
+    private BillRepository billRepository;
+
     @Value("${app.id}")
     private String wid;
 
@@ -125,6 +128,16 @@ public class HomeController {
             if(!"".equals(payment.getRemark())){
                 model.addAttribute("ismark", true);
                 model.addAttribute("mark", payment.getRemark());
+            }
+
+
+
+            //bill
+            model.addAttribute("isBill",false);
+
+            if(payment.isBill() == true){
+                model.addAttribute("isBill",true);
+                model.addAttribute("bills",billRepository.findAll());
             }
 
             return "pay";

@@ -20,7 +20,8 @@ let login = new Vue({
                 isIndefine: '2',
                 type: '2',
                 p1code: '0',
-                p2code: '0'
+                p2code: '0',
+                isBill: '2'
             },
             sadmin: false,
             editform1: {
@@ -29,6 +30,8 @@ let login = new Vue({
             noschool: true,
             isIndefine: false,
             editIsIndefine: false,
+            isBill:false,
+            editIsBill: false,
             rules: {
                 name: [
                     {required: true, message: '名字不能为空', trigger: 'blur'},
@@ -74,7 +77,6 @@ let login = new Vue({
 
         axios.get('/getBill').then((res) => {
             self.bills = res.data
-            console.log(res.data)
         })
 
         this.getAdmin()
@@ -93,6 +95,13 @@ let login = new Vue({
                 this.isIndefine = true;
             } else {
                 this.isIndefine = false;
+            }
+        },
+        changeIsBill(index) {
+            if (index == 1) {
+                this.isBill = true;
+            } else {
+                this.isBill = false;
             }
         },
         changeEditIndefine(index){
@@ -208,6 +217,21 @@ let login = new Vue({
             })
         },
 
+        deletBill(index, row){
+            var f = Object.assign({}, row);
+            var id = row.taxCode;
+            var postdata = {
+                id: id
+            }
+            axios.post('/deleteBill',postdata).then((res)=>{
+                if(res.data == 1){
+                    axios.get('/getBill').then((res) => {
+                        this.bills = res.data;
+                    })
+                }
+            })
+        },
+
 
         handleEdit: function (index, row) {
 
@@ -225,6 +249,7 @@ let login = new Vue({
                 this.noschool = true;
             }
             axios.get('/getType?id=' + f.id).then((res) => {
+
                 f.options = []
                 for(var i = 0;i<res.data.length; i++){
                     f.options = res.data
@@ -240,17 +265,30 @@ let login = new Vue({
                     f.isIndefine = '2'
                     this.editIsIndefine = false
                 }
+
+                if(f.bill == true){
+                    f.isBill = '1'
+                    this.editIsBill = true
+                }else {
+                    f.isBill = '2'
+                    this.editIsBill = false
+                }
+
                 this.editform1 = f;
             });
             this.editFormVisible = true;
 
         },
         fileUpload(response, file, fileList){
+            var self = this;
             if(response.code == 0){
                 this.$message({
                     message: '添加成功',
                     type: 'success'
                 });
+                axios.get('/getBill').then((res) => {
+                    self.bills = res.data
+                })
             }else {
                 this.$message({
                     message: '上传失败，请检查文件格式',

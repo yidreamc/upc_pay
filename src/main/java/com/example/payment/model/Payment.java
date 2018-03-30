@@ -37,6 +37,16 @@ public class Payment {
 
     private int p2item = 0;
 
+    private boolean isBill = false;
+
+    public boolean isBill() {
+        return isBill;
+    }
+
+    public void setBill(boolean bill) {
+        isBill = bill;
+    }
+
     public int getP1item() {
         return p1item;
     }

@@ -17,3 +17,10 @@
     justify-content: center;
     margin-top: 20px;
 }
+.weui-textarea{
+    background-color: #ffffff;
+}
+.el-upload{
+    margin-left: auto;
+    margin-right: auto;
+}

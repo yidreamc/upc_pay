@@ -48,7 +48,7 @@ public class PaymentController {
 
 
     @GetMapping("/getPaymentData")
-    public Object getPaymentData(String uid,String uname,String amt,int pid) throws UnsupportedEncodingException {
+    public Object getPaymentData(String uid,String uname,String amt,int pid,String mark) throws UnsupportedEncodingException {
 
         Payment payment = paymentRepository.findOne(pid);
         if(payment == null){
@@ -64,6 +64,19 @@ public class PaymentController {
             int p1code = payment.getP1code();
             int p2code = payment.getP2code();
 
+            String p1 = payment.getP1name();
+            String p2 = payment.getP2name();
+
+            System.out.println("".equals(p1));
+            System.out.println("".equals(p2));
+            System.out.println(uid == null);
+            if("".equals(p1)){
+                uname = "default";
+            }
+
+            if("".equals(p2)){
+               uid = "default";
+            }
 
             if(uname == "" || uid == ""){
                 Map<String, String> err = new HashMap<>();
@@ -71,9 +84,7 @@ public class PaymentController {
                 err.put("info","参数不能为空");
                 return ResultData.ok(err);
             }
-
             if(p1code != 0){
-
 
                 //身份证
                 if(p1code == 1){
@@ -92,6 +103,15 @@ public class PaymentController {
                         Map<String, String> err = new HashMap<>();
                         err.put("code","0");
                         err.put("info","请输入正确的手机号");
+                        return ResultData.ok(err);
+                    }
+                }
+
+                if(p1code == 3){
+                    if(getLen(uname)>50){
+                        Map<String, String> err = new HashMap<>();
+                        err.put("code","0");
+                        err.put("info","参数的长度必须小于50个字");
                         return ResultData.ok(err);
                     }
                 }
@@ -125,7 +145,6 @@ public class PaymentController {
 
         }
 
-
         String sysid = payment.getSysid();
         String subsysid = payment.getSubsysid();
         String cert = payment.getCert();
@@ -134,6 +153,8 @@ public class PaymentController {
 
 
         Order order = new Order(uid,uname);
+
+        System.out.println("uid: " + uid + "  uname: " + uname);
         order = orderRepository.save(order);
         order.setOrderId(String.valueOf(order.getId() + orderBase));
         orderRepository.save(order);
@@ -147,12 +168,13 @@ public class PaymentController {
         billInfo.setOrderinfoname(uname);
         billInfo.setReturnURL(serverPath + "/payreturn/" + uid + "/" + uname);
         //LOGGER.info(serverPath + "/mapi/payment_result");
-        billInfo.setBillremark("缴费");
+        billInfo.setBillremark(mark);
         billInfo.setBilldtl(billDtls);
 
 
         String data = XMLUtils.javaBean2xml(billInfo);
         String sign = MD5.getMD5(sysid + subsysid + cert + data).toLowerCase();
+
 
         data = URLEncoder.encode(data, "UTF-8");
 
@@ -164,10 +186,36 @@ public class PaymentController {
         retMap.put("sign", sign);
         retMap.put("code","1");
 
+        System.out.println("mark" + mark.length());
+
         //System.out.println(username + " " + idcard + " start");
         return ResultData.ok(retMap);
 
+    }
 
 
+
+    /**
+     * 获取字符串的长度，如果有中文，则每个中文字符计为2位
+     * @param value 指定的字符串
+     * @return 字符串的长度
+     */
+    public int getLen(String value) {
+        int valueLength = 0;
+        String chinese = "[\u0391-\uFFE5]";
+        /* 获取字段值的长度，如果含中文字符，则每个中文字符长度为2，否则为1 */
+        for (int i = 0; i < value.length(); i++) {
+            /* 获取一个字符 */
+            String temp = value.substring(i, i + 1);
+            /* 判断是否为中文字符 */
+            if (temp.matches(chinese)) {
+                /* 中文字符长度为2 */
+                valueLength += 2;
+            } else {
+                /* 其他字符长度为1 */
+                valueLength += 1;
+            }
+        }
+        return valueLength;
     }
 }

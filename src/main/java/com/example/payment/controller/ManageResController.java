@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-public class AdminResController {
+public class ManageResController {
 
 
     @Autowired
@@ -33,10 +35,13 @@ public class AdminResController {
     public Object doLogin(@RequestBody Map<Object, Object> param, HttpServletRequest request) {
         String uname = param.get("uname").toString();
         String pwd = param.get("pwd").toString();
+        if("".equals(pwd) || pwd == null){
+            return 0;
+        }
         if (uname != null && pwd != null) {
-            Collection<Admin> admins = adminRepository.findAdminByUnameAndPwd(uname, pwd);
-            if (!admins.isEmpty()) {
-                request.getSession().setAttribute("admin", true);
+            Admin admin = adminRepository.findFirstByUnameAndPwd(uname, pwd);
+            if (admin != null) {
+                request.getSession().setAttribute("admin", admin);
                 return 1;
             }
         }
@@ -53,13 +58,31 @@ public class AdminResController {
     }
 
     @GetMapping("/getpays")
-    public Object getPays() {
-        return paymentRepository.findByOrderByIdDesc();
+    public Object getPays(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        Admin admin = (Admin)request.getSession().getAttribute("admin");
+        if(admin == null){
+            response.sendRedirect("/error");
+        }
+        if(admin.getSadmin() == 1){
+            return paymentRepository.findByOrderByIdDesc();
+        }else {
+            return paymentRepository.findByAidOrderById(admin.getId());
+        }
+
     }
 
     @GetMapping("/getType")
     public Object getType(int id) {
         return payTypeRepository.findByPid(id);
+    }
+
+    @GetMapping("/getadmin")
+    public Object getAdmin(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        Admin admin = (Admin)request.getSession().getAttribute("admin");
+        if(admin == null){
+            response.sendRedirect("/error");
+        }
+        return admin;
     }
 
     @PostMapping("/delete")
@@ -69,7 +92,16 @@ public class AdminResController {
     }
 
     @PostMapping("/create")
-    public Object createPayment(@RequestBody Map<Object, Object> param, HttpServletRequest req) {
+    public Object createPayment(@RequestBody Map<Object, Object> param, HttpServletRequest req, HttpServletResponse response) throws IOException {
+
+        Admin admin = (Admin) req.getSession().getAttribute("admin");
+        int aid = 0;
+        if(admin!= null){
+            aid = admin.getId();
+        }else {
+            response.sendRedirect("/error");
+        }
+
 
         String name = param.get("name").toString();
         Integer type = Integer.valueOf(param.get("type").toString());
@@ -96,6 +128,9 @@ public class AdminResController {
 
         Payment payment = new Payment(sysid, subsysid, cert, feeitemid, name, "", p1name, p1code, p2name, p2code, in);
         payment.setType(type);
+        payment.setAid(aid);
+
+
         payment = paymentRepository.save(payment);
 
         int pid = payment.getId();
@@ -142,6 +177,7 @@ public class AdminResController {
             p2name = param.get("p2name").toString();
             p2code = Integer.valueOf(param.get("p2code").toString());
         }
+
         String subsysid = param.get("subsysid").toString();
         String sysid = param.get("sysid").toString();
         String feeitemid = param.get("feeitemid").toString();

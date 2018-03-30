@@ -28,6 +28,47 @@ public class Payment {
 
     private int type = 2;
 
+    private int aid = 0;
+
+    private int isnew = 0;
+
+
+    private int p1item = 0;
+
+    private int p2item = 0;
+
+    public int getP1item() {
+        return p1item;
+    }
+
+    public void setP1item(int p1item) {
+        this.p1item = p1item;
+    }
+
+    public int getP2item() {
+        return p2item;
+    }
+
+    public void setP2item(int p2item) {
+        this.p2item = p2item;
+    }
+
+    public int getIsnew() {
+        return isnew;
+    }
+
+    public void setIsnew(int isnew) {
+        this.isnew = isnew;
+    }
+
+    public int getAid() {
+        return aid;
+    }
+
+    public void setAid(int aid) {
+        this.aid = aid;
+    }
+
     public int getType() {
         return type;
     }

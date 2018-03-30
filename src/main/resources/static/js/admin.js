@@ -22,7 +22,7 @@ let login = new Vue({
                 p1code: '0',
                 p2code: '0'
             },
-
+            sadmin: false,
             editform1: {
                 options: []
             },
@@ -35,18 +35,6 @@ let login = new Vue({
                 ],
                 type: [
                     {required: true, message: '类型不能为空', trigger: 'change'},
-                ],
-                p1name: [
-                    {required: true, message: '该参数不能为空', trigger: 'blur'},
-                ],
-                p1code: [
-                    {required: true, message: '请选择校验规则', trigger: 'change'},
-                ],
-                p2name: [
-                    {required: true, message: '该参数不能为空', trigger: 'blur'},
-                ],
-                p2code: [
-                    {required: true, message: '请选择校验规则', trigger: 'change'},
                 ],
                 op: [
                     {required: true, message: '该参数不能为空', trigger: 'blur'},
@@ -63,14 +51,33 @@ let login = new Vue({
                 cert: [
                     {required: true, message: '该参数不能为空', trigger: 'blur'},
                 ],
-            }
+            },
+            adminid: '',
+            adminname: '',
+            admins: [],
+            bills: []
         }
     },
     mounted() {
+        var self = this;
 
         axios.get('/getpays').then((res) => {
-            this.pays = res.data;
+            self.pays = res.data;
         })
+
+        axios.get('/getadmin').then((res) => {
+
+            if(res.data.sadmin == 1){
+                self.sadmin = true;
+            }
+        })
+
+        axios.get('/getBill').then((res) => {
+            self.bills = res.data
+            console.log(res.data)
+        })
+
+        this.getAdmin()
 
     },
     methods: {
@@ -237,6 +244,73 @@ let login = new Vue({
             });
             this.editFormVisible = true;
 
+        },
+        fileUpload(response, file, fileList){
+            if(response.code == 0){
+                this.$message({
+                    message: '添加成功',
+                    type: 'success'
+                });
+            }else {
+                this.$message({
+                    message: '上传失败，请检查文件格式',
+                    type: 'warning'
+                });
+            }
+        },
+        getAdmin(){
+            axios.get('/allAdmin').then((res) => {
+                this.admins = res.data;
+                // console.log(res)
+            })
+        },
+        addAdmin(){
+            var postData = {
+                adminid: this.adminid,
+                adminname: this.adminname
+            };
+            var self = this;
+            axios.post('/addAdmin',postData).then((res) => {
+                //this.admins = res.data;
+                console.log(res)
+
+                //success
+                if(res.data.code == 0){
+                    self.$message({
+                        message: '创建成功！',
+                        type: 'success'
+                    });
+                    self.getAdmin();
+                    self.adminid = '';
+                    self.adminname = '';
+                }else {
+                    self.$message({
+                        message: res.data.msg,
+                        type: 'warning'
+                    });
+                }
+            })
+        },
+        deletAdmin(index, row){
+            var self = this;
+            var id = row.id;
+            var postdata = {
+                id: id
+            }
+            axios.post('/deleteAdmin',postdata).then((res)=>{
+                if(res.data.code == 0){
+                    self.$message({
+                        message: '删除成功！',
+                        type: 'success'
+                    });
+                    self.getAdmin();
+                }else {
+                    self.$message({
+                        message: res.data.msg,
+                        type: 'warning'
+                    });
+                }
+            })
         },
 
     }

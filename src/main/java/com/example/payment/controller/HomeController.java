@@ -1,10 +1,7 @@
 package com.example.payment.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.example.payment.model.PayType;
-import com.example.payment.model.PayTypeRepository;
-import com.example.payment.model.Payment;
-import com.example.payment.model.PaymentRepository;
+import com.example.payment.model.*;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +28,9 @@ public class HomeController {
 
     @Autowired
     private PayTypeRepository payTypeRepository;
+
+    @Autowired
+    private ItemRepository itemRepository;
 
     @Value("${app.id}")
     private String wid;
@@ -63,6 +63,8 @@ public class HomeController {
             model.addAttribute("types", types);
         }
 
+
+
         //校内用户
         if(payment.getType() == 1){
             String state = request.getParameter("state");
@@ -87,8 +89,44 @@ public class HomeController {
             return "payschool";
         }else {
             //校外用户
-            model.addAttribute("p1name", payment.getP1name());
-            model.addAttribute("p2name", payment.getP2name());
+
+            Object pp1 = ("".equals(payment.getP1name())?false:payment.getP1name());
+            Object pp2 = ("".equals(payment.getP2name())?false:payment.getP2name());
+
+            model.addAttribute("p1name", pp1);
+            model.addAttribute("p2name", pp2);
+
+//            if(payment.getIsnew() == 1){
+//
+//
+//
+//                return "paynew";
+//            }
+            model.addAttribute("p1item", false);
+            model.addAttribute("p2item", false);
+
+            int p1item = payment.getP1item();
+            if( p1item!= 0 ){
+                Iterable<Item> items = itemRepository.findByNameid(p1item);
+                model.addAttribute("p1items", items);
+                model.addAttribute("p1item", true);
+            }
+
+            int p2item = payment.getP2item();
+            if( p2item!= 0 ){
+                Iterable<Item> items = itemRepository.findByNameid(p2item);
+                model.addAttribute("p2items", items);
+                model.addAttribute("p2item", true);
+            }
+
+
+            //mark
+            model.addAttribute("ismark", false);
+            if(!"".equals(payment.getRemark())){
+                model.addAttribute("ismark", true);
+                model.addAttribute("mark", payment.getRemark());
+            }
+
             return "pay";
 
         }

@@ -10,8 +10,13 @@ public class Admin {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
+    //工号
     private String uname;
     private String pwd;
+    private int sadmin;
+
+
+    private String unit;
 
     public Admin(String uname, String pwd) {
         this.uname = uname;
@@ -19,6 +24,23 @@ public class Admin {
     }
 
     public Admin() {
+    }
+
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public int getSadmin() {
+        return sadmin;
+    }
+
+    public void setSadmin(int sadmin) {
+        this.sadmin = sadmin;
     }
 
     public int getId() {

@@ -22,7 +22,8 @@ $(function () {
                         amt: $('#amt').val(),
                         uid: $('#p2').val(),
                         uname: $('#p1').val(),
-                        pid: $('#id').val()
+                        pid: $('#id').val(),
+                        mark: $('#mark').val(),
                     },
                     success: function (result) {
                         result = JSON.parse(result);
@@ -54,4 +55,8 @@ $(function () {
         var index = opt.selectedIndex;
         $('#amt').val(opt[index].dataset.money);
         $('#amt').attr("disabled",true);
+
+        //备注
+        $('#mark').val(opt[index].dataset.type);
+
     }

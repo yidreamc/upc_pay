@@ -104,6 +104,7 @@ public class ManageResController {
 
 
         String name = param.get("name").toString();
+        String remark = param.get("remark").toString();
         Integer type = Integer.valueOf(param.get("type").toString());
         Integer isIndefine = Integer.valueOf(param.get("isIndefine").toString());
         Integer bill = Integer.valueOf(param.get("isBill").toString());
@@ -133,6 +134,7 @@ public class ManageResController {
         payment.setType(type);
         payment.setAid(aid);
         payment.setBill(bi);
+        payment.setRemark(remark);
 
 
         payment = paymentRepository.save(payment);
@@ -187,6 +189,7 @@ public class ManageResController {
         String sysid = param.get("sysid").toString();
         String feeitemid = param.get("feeitemid").toString();
         String cert = param.get("cert").toString();
+        String remark = param.get("remark").toString();
         Option2[] options = new Gson().fromJson(param.get("stringify").toString(), Option2[].class);
         boolean in = (isIndefine == 1) ? true : false;
         boolean bi = (bill == 1) ? true : false;
@@ -205,6 +208,7 @@ public class ManageResController {
         payment.setIndefine(in);
         payment.setType(type);
         payment.setBill(bi);
+        payment.setRemark(remark);
 
         paymentRepository.save(payment);
 

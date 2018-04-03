@@ -8,6 +8,10 @@ $(function () {
         $('#dialog_2').fadeOut(200);
     });
 
+    $('#reset').click(function () {
+        window.location.href = window.location.href
+    });
+
 
     $('#sub').click(function () {
             var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
@@ -73,22 +77,22 @@ function changeType(opt) {
 function changeBill(opt) {
     var index = opt.selectedIndex;
     $('#taxCode').val(opt[index].dataset.taxcode);
-    // $('#taxCode').attr("disabled", true);
+    $('#taxCode').attr("disabled", true);
 
     $('#zzAddress').val(opt[index].dataset.zzaddress);
-    // $('#zzAddress').attr("disabled", true);
+    $('#zzAddress').attr("disabled", true);
 
     $('#zzBank').val(opt[index].dataset.zzbank);
-    // $('#zzBank').attr("disabled", true);
+    $('#zzBank').attr("disabled", true);
 
     $('#zzBnkName').val(opt[index].dataset.zzbnkname);
-    // $('#zzBnkName').attr("disabled", true);
+    $('#zzBnkName').attr("disabled", true);
 
     $('#zzTel').val(opt[index].dataset.zztel);
-    // $('#zzTel').attr("disabled", true);
+    $('#zzTel').attr("disabled", true);
 
 
     $('#zzUnit').val(opt[index].dataset.zzunit);
-    // $('#zzUnit').attr("disabled", true);
+    $('#zzUnit').attr("disabled", true);
 
 }

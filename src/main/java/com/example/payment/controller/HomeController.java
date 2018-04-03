@@ -131,7 +131,6 @@ public class HomeController {
             }
 
 
-
             //bill
             model.addAttribute("isBill",false);
 

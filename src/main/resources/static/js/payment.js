@@ -16,8 +16,8 @@ $(function () {
                 $("#dialog_1").fadeIn(200);
             } else {
                 $.ajax({
-                   // url: 'http://localhost:8088/getPaymentData',
-                   url: 'http://wxsportscard.upc.edu.cn:8088/getPaymentData',
+                    // url: 'http://localhost:8088/getPaymentData',
+                    url: 'http://wxsportscard.upc.edu.cn:8088/getPaymentData',
                     type: 'GET',
                     data: {
                         amt: $('#amt').val(),
@@ -26,6 +26,12 @@ $(function () {
                         pid: $('#id').val(),
                         mark: $('#mark').val(),
                         taxCode: $('#taxCode').val(),
+                        zzAddress: $('#zzAddress').val(),
+                        zzBank: $('#zzBank').val(),
+                        zzBnkName: $('#zzBnkName').val(),
+                        zzTel: $('#zzTel').val(),
+                        zzUnit: $('#zzUnit').val(),
+
                     },
                     success: function (result) {
                         result = JSON.parse(result);
@@ -67,4 +73,22 @@ function changeType(opt) {
 function changeBill(opt) {
     var index = opt.selectedIndex;
     $('#taxCode').val(opt[index].dataset.taxcode);
+    $('#taxCode').attr("disabled", true);
+
+    $('#zzAddress').val(opt[index].dataset.zzaddress);
+    $('#zzAddress').attr("disabled", true);
+
+    $('#zzBank').val(opt[index].dataset.zzbank);
+    $('#zzBank').attr("disabled", true);
+
+    $('#zzBnkName').val(opt[index].dataset.zzbnkname);
+    $('#zzBnkName').attr("disabled", true);
+
+    $('#zzTel').val(opt[index].dataset.zztel);
+    $('#zzTel').attr("disabled", true);
+
+
+    $('#zzUnit').val(opt[index].dataset.zzunit);
+    $('#zzUnit').attr("disabled", true);
+
 }

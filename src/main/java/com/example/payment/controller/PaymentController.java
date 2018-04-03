@@ -46,7 +46,7 @@ public class PaymentController {
 
 
     @GetMapping("/getPaymentData")
-    public Object getPaymentData(String taxCode, String uid, String uname, String amt, int pid, String mark) throws UnsupportedEncodingException {
+    public Object getPaymentData(String zzAddress, String zzBank, String zzBnkName, String zzTel, String zzUnit, String taxCode, String uid, String uname, String amt, int pid, String mark) throws UnsupportedEncodingException {
 
         Payment payment = paymentRepository.findOne(pid);
         if (payment == null) {
@@ -144,7 +144,6 @@ public class PaymentController {
         }
 
 
-
         String sysid = payment.getSysid();
         String subsysid = payment.getSubsysid();
         String cert = payment.getCert();
@@ -171,16 +170,22 @@ public class PaymentController {
         billInfo.setBilldtl(billDtls);
 
 
-        if(!"".equals(taxCode)){
-            Bill bill = billRepository.findByTaxCode(taxCode);
-            if(bill != null){
-                billInfo.setTaxCode(bill.getTaxCode());
-                billInfo.setZzAddress(bill.getZzAddress());
-                billInfo.setZzBank(bill.getZzBank());
-                billInfo.setZzBnkName(bill.getZzBnkName());
-                billInfo.setZzTel(bill.getZzTel());
-                billInfo.setZzUnit(bill.getZzUnit());
-            }
+        // String zzAddress, String zzBank, String zzBnkName, String zzTel, String zzUnit, String taxCode,
+
+
+        if ("".equals(zzAddress) || "".equals(zzBank) || "".equals(zzBnkName) || "".equals(zzTel) || "".equals(zzUnit) || "".equals(taxCode)) {
+            Map<String, String> err = new HashMap<>();
+            err.put("code", "0");
+            err.put("info", "开票参数不能为空");
+            return ResultData.ok(err);
+        }
+        else {
+            billInfo.setTaxCode(taxCode);
+            billInfo.setZzAddress(zzAddress);
+            billInfo.setZzBank(zzBank);
+            billInfo.setZzBnkName(zzBnkName);
+            billInfo.setZzTel(zzTel);
+            billInfo.setZzUnit(zzUnit);
         }
 
 

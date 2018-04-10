@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Calendar;
 import java.util.Map;
 
 @Controller
@@ -45,6 +46,13 @@ public class HomeController {
 
     @GetMapping("/pay")
     public String payPage(Model model, @RequestParam(defaultValue = "0") int id, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        //每日封账
+        Calendar cal = Calendar.getInstance();
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        int min = cal.get(Calendar.MINUTE);
+        if((hour == 23 && min >= 30) || (hour == 0 && min <=30)){
+            return "notice";
+        }
 
         if(id != 0){
             request.getSession().setAttribute("id",id);

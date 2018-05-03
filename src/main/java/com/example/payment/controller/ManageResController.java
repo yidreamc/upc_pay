@@ -35,7 +35,7 @@ public class ManageResController {
     public Object doLogin(@RequestBody Map<Object, Object> param, HttpServletRequest request) {
         String uname = param.get("uname").toString();
         String pwd = param.get("pwd").toString();
-        if("".equals(pwd) || pwd == null){
+        if ("".equals(pwd) || pwd == null) {
             return 0;
         }
         if (uname != null && pwd != null) {
@@ -58,14 +58,14 @@ public class ManageResController {
     }
 
     @GetMapping("/getpays")
-    public Object getPays(HttpServletRequest request,HttpServletResponse response) throws IOException {
-        Admin admin = (Admin)request.getSession().getAttribute("admin");
-        if(admin == null){
+    public Object getPays(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Admin admin = (Admin) request.getSession().getAttribute("admin");
+        if (admin == null) {
             response.sendRedirect("/error");
         }
-        if(admin.getSadmin() == 1){
+        if (admin.getSadmin() == 1) {
             return paymentRepository.findByOrderByIdDesc();
-        }else {
+        } else {
             return paymentRepository.findByAidOrderById(admin.getId());
         }
 
@@ -77,9 +77,9 @@ public class ManageResController {
     }
 
     @GetMapping("/getadmin")
-    public Object getAdmin(HttpServletRequest request,HttpServletResponse response) throws IOException {
-        Admin admin = (Admin)request.getSession().getAttribute("admin");
-        if(admin == null){
+    public Object getAdmin(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Admin admin = (Admin) request.getSession().getAttribute("admin");
+        if (admin == null) {
             response.sendRedirect("/error");
         }
         return admin;
@@ -96,9 +96,9 @@ public class ManageResController {
 
         Admin admin = (Admin) req.getSession().getAttribute("admin");
         int aid = 0;
-        if(admin!= null){
+        if (admin != null) {
             aid = admin.getId();
-        }else {
+        } else {
             response.sendRedirect("/error");
         }
 
@@ -113,9 +113,9 @@ public class ManageResController {
 
         // type = 1 校内用户
         if (type != 1) {
-            p1name = param.get("p1name").toString();
+            p1name = param.get("p1name") == null ? null : param.get("p1name").toString();
             p1code = Integer.valueOf(param.get("p1code").toString());
-            p2name = param.get("p2name").toString();
+            p2name = param.get("p2name")== null ? null : param.get("p2name").toString();
             p2code = Integer.valueOf(param.get("p2code").toString());
         }
 

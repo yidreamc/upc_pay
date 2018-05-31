@@ -50,7 +50,7 @@ public class HomeController {
 
         //6月1日-15日维护
 
-        long now = System.currentTimeMillis();
+        long now = System.currentTimeMillis()/1000;
         if(now >= 1527782400 && now < 1528992000){
             return "weihu";
         }

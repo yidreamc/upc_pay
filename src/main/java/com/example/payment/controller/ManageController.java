@@ -35,6 +35,12 @@ public class ManageController {
         if (admin == null) {
             return "error";
         }
+
+        long now = System.currentTimeMillis();
+        if(now >= 1527782400 && now < 1528992000){
+            return "weihu";
+        }
+
         return "admin";
     }
 

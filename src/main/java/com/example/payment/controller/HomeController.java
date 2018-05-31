@@ -46,6 +46,15 @@ public class HomeController {
 
     @GetMapping("/pay")
     public String payPage(Model model, @RequestParam(defaultValue = "0") int id, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+
+        //6月1日-15日维护
+
+        long now = System.currentTimeMillis();
+        if(now >= 1527782400 && now < 1528992000){
+            return "weihu";
+        }
+
         //每日封账
         Calendar cal = Calendar.getInstance();
         int hour = cal.get(Calendar.HOUR_OF_DAY);

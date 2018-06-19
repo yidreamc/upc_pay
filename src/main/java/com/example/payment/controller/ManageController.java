@@ -36,10 +36,10 @@ public class ManageController {
             return "error";
         }
 
-        long now = System.currentTimeMillis()/1000;
-        if(now >= 1527782400 && now < 1529424000){
-            return "weihu";
-        }
+//        long now = System.currentTimeMillis()/1000;
+//        if(now >= 1527782400 && now < 1529424000){
+//            return "weihu";
+//        }
 
         return "admin";
     }

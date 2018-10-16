@@ -23,8 +23,11 @@ dist/
 nbdist/
 .nb-gradle/
 
-server/src/main/resources/application-prod.yml
+application-prod.yml
+application-dev.yml
 excel/
+
+mysql_data/
 
 
 

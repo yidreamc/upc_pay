@@ -1,6 +1,6 @@
 package com.example.payng;
 
-import com.example.payng.util.MD5;
+import ml.yidreamc.upcpay.common.util.MD5;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;

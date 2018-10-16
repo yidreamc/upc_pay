@@ -8,7 +8,6 @@ public enum  ManageType {
     //部门管理员
     DEP,
 
-
     //超级
     SUPPER
 

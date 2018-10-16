@@ -15,8 +15,10 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  profiles:
+    active: dev
 server:
-  port: 8089
+  port: 8080
 app:
   id:
   secrect:

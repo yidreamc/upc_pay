@@ -25,6 +25,7 @@ nbdist/
 
 application-prod.yml
 application-dev.yml
+application-docker.yml
 excel/
 
 mysql_data/

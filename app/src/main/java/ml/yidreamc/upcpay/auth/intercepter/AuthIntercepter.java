@@ -25,16 +25,6 @@ public class AuthIntercepter extends HandlerInterceptorAdapter {
 
         Manage manage = (Manage) request.getSession().getAttribute("manage");
 
-        if ("dev".equals(env)) {
-            if(manage == null){
-                manage = new Manage();
-                manage.setId(1);
-                manage.setAdminType(ManageType.SUPPER);
-                request.getSession().setAttribute("manage", manage);
-            }
-            return true;
-        }
-
         if (manage == null) {
             ServletOutputStream out = response.getOutputStream();
             out.print("{\n" +

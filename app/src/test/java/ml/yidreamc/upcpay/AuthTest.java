@@ -25,7 +25,7 @@ public class AuthTest {
         str = MD5.getMD5(str);
 
 //        str = "http://wxsportscard.upc.edu.cn:8080/admin?un=1507020129&time=1&verify=" + str;
-        str = "http://wxsportscard.upc.edu.cn:8080/admin?un=20110034&time=1&verify=" + str;
+        str = "http://localhost:8000/#/auth?un=20110034&verify=" + str;
         System.out.println(str);
 
     }

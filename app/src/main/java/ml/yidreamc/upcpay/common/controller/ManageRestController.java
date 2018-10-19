@@ -45,6 +45,14 @@ public class ManageRestController {
     @Autowired
     private OldToNewMapRepository oldToNewMapRepository;
 
+    @GetMapping("/xxxx")
+    public Object xxxx(){
+        Map<String,String> a = new HashMap();
+        a.put("a","123");
+        a.put("n","123");
+        return a;
+    }
+
     @PostMapping("/create")
     @Transactional
     public Response create(@RequestBody PaymentForm paymentForm) {

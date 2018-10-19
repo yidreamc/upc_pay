@@ -1,4 +1,4 @@
-package ml.yidreamc.upcpay.common.intercepter;
+package ml.yidreamc.upcpay.auth.intercepter;
 
 import ml.yidreamc.upcpay.common.entity.Manage;
 import ml.yidreamc.upcpay.common.entity.entityenum.ManageType;
@@ -29,7 +29,7 @@ public class AuthIntercepter extends HandlerInterceptorAdapter {
             if(manage == null){
                 manage = new Manage();
                 manage.setId(1);
-                manage.setAdminType(ManageType.DEP);
+                manage.setAdminType(ManageType.SUPPER);
                 request.getSession().setAttribute("manage", manage);
             }
             return true;

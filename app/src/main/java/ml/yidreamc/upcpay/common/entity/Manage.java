@@ -1,5 +1,6 @@
 package ml.yidreamc.upcpay.common.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import ml.yidreamc.upcpay.common.entity.entityenum.ManageType;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ public class Manage {
     //工号
     private String uname;
 
+    @JsonIgnore
     private String pwd;
 
     @Enumerated(EnumType.STRING)

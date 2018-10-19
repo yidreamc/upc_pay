@@ -1,4 +1,4 @@
-package ml.yidreamc.upcpay.common.controller;
+package ml.yidreamc.upcpay.auth.controller;
 
 import ml.yidreamc.upcpay.common.dto.Response;
 import ml.yidreamc.upcpay.common.entity.Manage;
@@ -16,7 +16,7 @@ import java.util.Map;
 
 @Controller
 @Slf4j
-public class ManageController {
+public class AuthController {
 
     @Autowired
     private HttpSession httpSession;
@@ -67,7 +67,7 @@ public class ManageController {
             }
 
             httpSession.setAttribute("manage", manage);
-            return new Response(0, "");
+            return new Response(0, "",manage);
         }
         return new Response(1, "");
 

@@ -1,9 +1,6 @@
-package ml.yidreamc.upcpay.common.entity;
+package ml.yidreamc.upcpay.auth.entity;
 
 import org.springframework.data.repository.CrudRepository;
-
-import java.util.Collection;
-import java.util.List;
 
 public interface ManageRepository extends CrudRepository<Manage, Integer> {
 

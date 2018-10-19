@@ -1,8 +1,8 @@
 package ml.yidreamc.upcpay.auth.controller;
 
 import ml.yidreamc.upcpay.common.dto.Response;
-import ml.yidreamc.upcpay.common.entity.Manage;
-import ml.yidreamc.upcpay.common.entity.ManageRepository;
+import ml.yidreamc.upcpay.auth.entity.Manage;
+import ml.yidreamc.upcpay.auth.entity.ManageRepository;
 import ml.yidreamc.upcpay.common.util.MD5;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

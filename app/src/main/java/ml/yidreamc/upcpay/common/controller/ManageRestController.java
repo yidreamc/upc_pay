@@ -1,5 +1,6 @@
 package ml.yidreamc.upcpay.common.controller;
 
+import ml.yidreamc.upcpay.auth.entity.Manage;
 import ml.yidreamc.upcpay.common.entity.PaymentItem;
 import lombok.extern.slf4j.Slf4j;
 import ml.yidreamc.upcpay.common.dto.*;

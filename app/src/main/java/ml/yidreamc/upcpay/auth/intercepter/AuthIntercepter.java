@@ -1,7 +1,6 @@
 package ml.yidreamc.upcpay.auth.intercepter;
 
-import ml.yidreamc.upcpay.common.entity.Manage;
-import ml.yidreamc.upcpay.common.entity.entityenum.ManageType;
+import ml.yidreamc.upcpay.auth.entity.Manage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

@@ -1,8 +1,8 @@
 package ml.yidreamc.upcpay.auth;
 
 
-import ml.yidreamc.upcpay.common.entity.Manage;
-import ml.yidreamc.upcpay.common.entity.ManageRepository;
+import ml.yidreamc.upcpay.auth.entity.Manage;
+import ml.yidreamc.upcpay.auth.entity.ManageRepository;
 import ml.yidreamc.upcpay.common.entity.entityenum.ManageType;
 import ml.yidreamc.upcpay.common.util.MD5;
 import org.junit.Test;

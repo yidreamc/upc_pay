@@ -1,4 +1,4 @@
-package ml.yidreamc.upcpay.common.entity;
+package ml.yidreamc.upcpay.auth.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import ml.yidreamc.upcpay.common.entity.entityenum.ManageType;

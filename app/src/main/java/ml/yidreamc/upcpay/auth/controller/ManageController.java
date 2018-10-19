@@ -1,17 +1,15 @@
 package ml.yidreamc.upcpay.auth.controller;
 
 import ml.yidreamc.upcpay.common.dto.Response;
-import ml.yidreamc.upcpay.common.entity.Manage;
-import ml.yidreamc.upcpay.common.entity.ManageRepository;
+import ml.yidreamc.upcpay.auth.entity.Manage;
+import ml.yidreamc.upcpay.auth.entity.ManageRepository;
 import ml.yidreamc.upcpay.common.util.MD5;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.Map;
 
 @RestController

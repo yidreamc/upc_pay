@@ -2,7 +2,13 @@ package ml.yidreamc.upcpay.notice.entity;
 
 public enum  NoticeType {
 
-    DEFAULT, // 默认
+    /**
+     * 默认
+     */
+    DEFAULT,
 
-    DAY, // 每天执行
+    /**
+     * 每天执行
+     */
+    DAY,
 }

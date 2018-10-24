@@ -17,6 +17,8 @@ public class Notice {
     @Enumerated(EnumType.STRING)
     private NoticeType noticeType;
 
+    private String msg;
+
     public int getId() {
         return id;
     }
@@ -47,5 +49,13 @@ public class Notice {
 
     public void setNoticeType(NoticeType noticeType) {
         this.noticeType = noticeType;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 }

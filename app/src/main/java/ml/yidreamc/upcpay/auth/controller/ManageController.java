@@ -19,14 +19,20 @@ public class ManageController {
     private ManageRepository manageRepository;
 
     @PostMapping("/login")
-    public Response login(@RequestBody Map<String,String> params, HttpServletRequest request){
+    public Response login(@RequestBody Map<String, String> params, HttpServletRequest request) {
         String uname = params.get("uname");
         String pwd = params.get("pwd");
-        Manage manage = manageRepository.findFirstByUnameAndPwd(uname,MD5.getMD5(uname + pwd));
-        if(manage == null){
-            return new Response(1,"用户名或密码不正确");
+        Manage manage = manageRepository.findFirstByUnameAndPwd(uname, MD5.getMD5(uname + pwd));
+        if (manage == null) {
+            return new Response(1, "用户名或密码不正确");
         }
-        request.getSession().setAttribute("manage",manage);
-        return new Response(0,"",manage);
+        request.getSession().setAttribute("manage", manage);
+        return new Response(0, "", manage);
+    }
+
+    @PostMapping("/logout")
+    public Response logout(HttpServletRequest request) {
+        request.getSession().removeAttribute("manage");
+        return new Response(0, "");
     }
 }

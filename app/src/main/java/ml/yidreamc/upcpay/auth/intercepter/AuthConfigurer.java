@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
-public class IntercepterAppConfigurer extends WebMvcConfigurerAdapter {
+public class AuthConfigurer extends WebMvcConfigurerAdapter {
 
     @Autowired
     private AuthIntercepter authIntercepter;

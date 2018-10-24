@@ -51,7 +51,7 @@ public class AuthController {
 
     @PostMapping(value = "/auth")
     @ResponseBody
-    public Response getPaymentPageData(@RequestBody Map<String,String> map) {
+    public Response getPaymentPageData(@RequestBody Map<String, String> map) {
         String un = map.get("un");
         String verify = map.get("verify");
 
@@ -67,7 +67,7 @@ public class AuthController {
             }
 
             httpSession.setAttribute("manage", manage);
-            return new Response(0, "",manage);
+            return new Response(0, "", manage);
         }
         return new Response(1, "");
 
@@ -75,7 +75,7 @@ public class AuthController {
 
     @GetMapping("/isauth")
     @ResponseBody
-    public Response isAuth(@RequestBody Map<String,String> param){
+    public Response isAuth(@RequestBody Map<String, String> param) {
         String un = param.get("un");
         Manage manage = manageRepository.findByUname(un);
         //不在管理员列表中
@@ -83,15 +83,14 @@ public class AuthController {
             return new Response(1, "");
         }
 
-        manage = (Manage)httpSession.getAttribute("manage");
+        manage = (Manage) httpSession.getAttribute("manage");
 
         //没有登陆过
-        if(manage == null){
-            return new Response(1,"");
+        if (manage == null) {
+            return new Response(1, "");
         }
-        return new Response(0,"");
+        return new Response(0, "");
     }
-
 
 
     private Boolean md5ParaVerify(String timestamp, String un, String verify) throws NoSuchAlgorithmException {

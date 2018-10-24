@@ -21,12 +21,10 @@ import java.util.*;
 @Slf4j
 public class ManageRestController {
 
-
     private String qrcodeBase = "http://qr.liantu.com/api.php?&w=200&text=";
 
     @Value("${app.fronturl}")
     private String fronturl;
-
 
     @Autowired
     private PaymentRepository paymentRepository;
@@ -45,14 +43,6 @@ public class ManageRestController {
 
     @Autowired
     private OldToNewMapRepository oldToNewMapRepository;
-
-    @GetMapping("/xxxx")
-    public Object xxxx(){
-        Map<String,String> a = new HashMap();
-        a.put("a","123");
-        a.put("n","123");
-        return a;
-    }
 
     @PostMapping("/create")
     @Transactional

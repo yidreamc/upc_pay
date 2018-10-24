@@ -13,7 +13,9 @@ public class Manage {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    //工号
+    /**
+     * 用户名 登录名
+     */
     private String uname;
 
     @JsonIgnore

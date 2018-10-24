@@ -8,7 +8,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>payng</name>
+	<name>upc_pay</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
@@ -84,6 +84,18 @@
 			<version>3.1.11</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.8.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -92,7 +104,45 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>checkstyle-validation</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<configLocation>src/checkstyle/checkstyle.xml</configLocation>
+					<excludes>**/ruijieservice/**/*</excludes>
+					<encoding>UTF-8</encoding>
+					<consoleOutput>true</consoleOutput>
+					<failOnViolation>true</failOnViolation>
+					<includeTestSourceDirectory>true</includeTestSourceDirectory>
+				</configuration>
+			</plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-checkstyle-plugin</artifactId>
+					<version>3.0.0</version>
+					<dependencies>
+						<dependency>
+							<groupId>com.puppycrawl.tools</groupId>
+							<artifactId>checkstyle</artifactId>
+							<version>8.14</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 
 

@@ -1,0 +1,30 @@
+version: "3.5"
+
+services:
+  mysql:
+    build: ../mysql
+    container_name: upc_pay_mysql
+    environment:
+     MYSQL_DATABASE: upc_pay
+     MYSQL_ROOT_PASSWORD: root
+     MYSQL_ROOT_HOST: '%'
+     TZ: Asia/Shanghai
+    expose:
+     - 3306
+    volumes:
+     - mysqlvolume:/var/lib/mysql
+    restart: always
+  java:
+    image: maven:3.5.4-jdk-8
+    container_name: upc_pay_java
+    working_dir: /app
+    volumes:
+      - ../app:/app
+      - ~/.m2:/root/.m2
+    expose:
+      - 8080
+    command: mvn clean spring-boot:run -Dspring-boot.run.profiles=dev
+    depends_on:
+      - mysql
+volumes:
+  mysqlvolume:

@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    url: jdbc:mysql://211.87.178.170:3306/pay-test
+    username: pay-test
+    password: pay-test
+    test-while-idle: true
+    validation-query: SELECT 1
+  thymeleaf:
+    mode: LEGACYHTML5
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  profiles:
+    active: dev
+server:
+  port: 8080
+app:
+  id:
+  secrect:
+  agentid:
+  key:
+  fronturl: http://localhost:8080
+  env: dev
